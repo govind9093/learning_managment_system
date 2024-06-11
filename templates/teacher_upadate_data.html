@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="firstname">First Name:</label>
+        <input type="text" name="firstname" value="{{edit.teacher_first_name }}"  required>
+
+        <label for="lastname">Last Name:</label>
+        <input type="text" name="lastname" value="{{edit.teacher_last_name}}"  required>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" value="{{edit.teacher_email}}"  required>
+
+        <label for="age">Age:</label>
+        <input type="number" name="age" value="{{edit.teacher_age}}"  required>
+
+        <label for="address">Address:</label>
+        <input type="text" name="address" value="{{edit.teacher_address}}"  required>
+
+        <label for="contact">Contact Number:</label>
+        {% comment %} <input type="tel" name="contact" pattern="[0-9]{10}" required> {% endcomment %}
+        <input type="tel" name="contact" value="{{edit.teacher_contact}}"   required>
+
+        <label for="gender">Gender:</label>
+        <select name="gender" value="{{edit.teacher_gender}}"  required>
+            <option value="" disabled selected>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+
+        <label for="joindate">Joining Date:</label>
+        <input type="date" name="joindate" value="{{edit.teacher_joindate}}"  required>
+
+        <label for="profession">Profession:</label>
+        <input type="text" name="profession" value="{{edit.teacher_proffesion}}"  required>
+
+        <input type="submit" value="Update">
+    </form>
+
+</body>
+
+</html>

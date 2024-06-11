@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Managment System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .course-detail {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        .course-info {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .course-info strong {
+            color: #333;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid mt-3" style="text-align: end;">
+        <h5><a href="">Logout</a></h5>
+    </div>
+    <div class="container">
+        <h1 class="mb-4 text-center">Courses Details</h1>
+        <div class="ml-3">
+            <form class="form-inline " method="GET" action="{% url 'studentHome' %}">
+                <input type="text" name="search" class="form-control mr-2" placeholder="Search by course name" value="{{ request.GET.search }}">
+                <button type="submit" class="btn btn-primary mr-2">Search</button>
+                <a href="{% url 'studentHome' %}" class="btn btn-secondary">Clear</a>
+            </form>
+        </div>
+        
+        <!-- Course Details Box 1 -->
+        <div class="container mt-3">
+            {% for course in page_obj %}
+            <div class="course-detail">
+                <div class="row m-0">
+                    <div class="media align-items-center col-4 p-0">
+                        <div class="text-left w-100">
+                            <h3 class="mb-0 course-title">{{course.course_name}}</h3><br>
+                            <h5 class="mb-0">{{course.description}}</h5>
+                        </div>
+                    </div>
+                    <div class="media align-items-center col-2 p-0">
+                        <div class="text-left w-100">
+                            <label for="teacher"><b>Teacher</b></label>
+                            <h3 class="mb-0 course-title">{{course.teacher_id}}</h3><br>
+                        </div>
+                    </div>
+                    <div class="col-6 p-0">
+                        <ul class="d-flex list-unstyled flex-wrap">
+                            <li class="mt-2 mr-3 font-size-small text-black-2 d-flex">
+                                <span class="font-weight-semibold"><b>Duration :- </b>{{course.duration}}</span>
+                            </li>
+                            <li class="mt-2 mr-3 font-size-small text-black-2 d-flex">
+                                <span class="font-weight-semibold"><b>Category :- </b>{{course.category}}</span>
+                            </li>
+                            <li class="mt-2 mr-3 font-size-small text-black-2 d-flex">
+                                <span class="font-weight-semibold"><b>Level :- </b>{{course.level}}</span>
+                            </li>
+                            <li class="mt-2 mr-3 font-size-small text-black-2 d-flex">
+                                <span class="font-weight-semibold"><b>Price :- </b>$ {{course.price}}</span>
+                            </li>
+                        </ul>
+                        <ul class="d-flex list-unstyled flex-wrap">
+                            <li class="mt-2 mr-3 font-size-small text-black-2 d-flex">
+                                <span class="font-weight-semibold"><b>Language :- </b>{{course.language}}</span>
+                            </li>
+                            <li class="mt-2 mr-3 font-size-small text-black-2 d-flex">
+                                <span class="font-weight-semibold"><b>Start Date :- </b>{{course.start_date}}</span>
+                            </li>
+                            <li class="mt-2 mr-3 font-size-small text-black-2 d-flex">
+                                <span class="font-weight-semibold"><b>End Date :- </b>{{course.end_date}}</span>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+        <div class="pagination">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" aria-label="First">
+                            <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">{{ num }}</a></li>
+                    {% elif num == 1 %}
+                        <li class="page-item"><a class="page-link" href="?page=1{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">1</a></li>
+                        {% if num < page_obj.number|add:'-4' %}<li class="page-item disabled"><span class="page-link">...</span></li>{% endif %}
+                    {% elif num == page_obj.paginator.num_pages %}
+                        {% if num > page_obj.number|add:'4' %}<li class="page-item disabled"><span class="page-link">...</span></li>{% endif %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">{{ page_obj.paginator.num_pages }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" aria-label="Last">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
