@@ -25,7 +25,7 @@ urlpatterns = [
      path('teacherHome/course_list/DeleteData/<int:pk>', views.DeleteData, name='DeleteData'),
 
      path('teacherHome/lesson_list',views.lesson_list, name='lesson_list'),
-      path('teacherHome/lesson_list/add_lesson',views.add_lesson, name='add_lesson'),
+     path('teacherHome/lesson_list/add_lesson/<int:pk>',views.add_lesson, name='add_lesson'),
      path('teacherHome/lesson_list/edit_lesson_data/<int:pk>', views.edit_lesson_data, name='edit_lesson_data'),
      path('teacherHome/lesson_list/DeleteLessonData/<int:pk>', views.DeleteLessonData, name='DeleteLessonData'),
 

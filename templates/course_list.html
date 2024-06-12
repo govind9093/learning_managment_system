@@ -126,7 +126,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="teacherHome/lesson_list" class="nav-link">
+                    <a href="/teacherHome/lesson_list" class="nav-link">
                         <i class="bi bi-speedometer2"></i>
                         Lesson list
                     </a>
@@ -166,6 +166,7 @@
                         <td>{{ course.price }}</td>
                         <td>{{ course.language }}</td>
                         <td>
+                            <a href="{% url 'add_lesson' pk=course.id %}" class="action-button edit-button">Add Lesson</a>
                             <a href="{% url 'edit_course_data' pk=course.id %}" class="action-button edit-button">Update</a>
                             <a href="{% url 'DeleteData' pk=course.id %}" class="action-button delete-button">Delete</a>
                         </td>

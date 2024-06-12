@@ -120,7 +120,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="teacherHome/lesson_list" class="nav-link">
+                    <a href="/teacherHome/course_list" class="nav-link">
                         <i class="bi bi-speedometer2"></i>
                         Course list
                     </a>
@@ -142,32 +142,26 @@
                     <button type="submit" class="btn btn-primary mr-2">Search</button>
                     <a href="{% url 'lesson_list' %}" class="btn btn-secondary">Clear</a>
                 </form>
-                <a href="lesson_list/add_lesson" class="btn btn-primary">Add Lesson</a>
+                {% comment %} <a href="lesson_list/add_lesson" class="btn btn-primary">Add Lesson</a> {% endcomment %}
             </div>
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Course Name</th>
-                        <th>Description</th>
-                        <th>Duration</th>
-                        <th>Level</th>
-                        <th>Price</th>
-                        <th>Language</th>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Course</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for course in page_obj %}
+                    {% for lesson in page_obj %}
                     <tr>
-                        <td>{{ course.course_name }}</td>
-                        <td>{{ course.description }}</td>
-                        <td>{{ course.duration }}</td>
-                        <td>{{ course.level }}</td>
-                        <td>{{ course.price }}</td>
-                        <td>{{ course.language }}</td>
+                        <td>{{ lesson.title }}</td>
+                        <td>{{ lesson.content }}</td>
+                        <td>{{ lesson.course_id }}</td>
                         <td>
-                            <a href="{% url 'edit_course_data' pk=course.id %}" class="action-button edit-button">Update</a>
-                            <a href="{% url 'DeleteData' pk=course.id %}" class="action-button delete-button">Delete</a>
+                            <a href="{% url 'edit_lesson_data' pk=lesson.id %}" class="action-button edit-button">Update</a>
+                            <a href="{% url 'DeleteData' pk=lesson.id %}" class="action-button delete-button">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}

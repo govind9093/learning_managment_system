@@ -176,16 +176,15 @@ def lesson_list(request):
 
 
 @login_required
-def add_lesson(request):
+def add_lesson(request,pk):
+    get_course_id = get_object_or_404(Course, id=pk)
     if request.method == 'POST':
         content = request.POST['content']
         title = request.POST['title']
-        course_id = request.POST['course_id'] 
+        course_id =get_course_id
         teacher = request.user
-        course = Course.objects.get(id=course_id)
- 
 
-        lessonData = Lesson(content=content, title=title, course_id=course, teacher=teacher)
+        lessonData = Lesson(content=content, title=title, course_id=course_id, teacher=teacher)
         lessonData.save()
         return redirect('lesson_list')
     
